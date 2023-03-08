@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import {
+  SafeAreaView,
   View,
   Text,
   TextInput,
   Button,
-  ScrollView,
+  FlatList,
   StyleSheet,
 } from "react-native";
 
@@ -54,11 +54,9 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* title */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Todos</Text>
-      </View>
+      <Text style={styles.title}>Todos</Text>
       {/* add todo task */}
       <View style={styles.taskInput}>
         <Text style={styles.taskTitle}>Create Task</Text>
@@ -80,8 +78,10 @@ export default function App() {
       )}
       {/* todo tasks */}
       {tasks.length !== 0 && (
-        <ScrollView style={styles.taskContainer}>
-          {tasks.map((each) => {
+        <FlatList
+          data={tasks}
+          renderItem={(itemData) => {
+            const each = itemData.item;
             return (
               <View style={styles.eachTask} key={each.id}>
                 <Text
@@ -93,30 +93,24 @@ export default function App() {
                 <Text onPress={() => handleDelete(each.id)}>X</Text>
               </View>
             );
-          })}
-        </ScrollView>
+          }}
+        />
       )}
-      <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
-    padding: 25,
-    paddingTop: 50,
-  },
-  header: {
-    width: "100%",
-    marginVertical: 10,
+    padding: 20,
+    height: "100%",
   },
   title: {
+    marginVertical: 10,
     fontSize: 30,
     textAlign: "center",
   },
   taskInput: {
-    padding: 2,
     marginVertical: 5,
   },
   taskTitle: {
@@ -129,6 +123,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     padding: 10,
+    fontSize: 16,
   },
   noTasks: {
     marginVertical: 200,
@@ -140,7 +135,6 @@ const styles = StyleSheet.create({
   },
   taskContainer: {
     marginVertical: 10,
-    overflow: "visible",
   },
   eachTask: {
     backgroundColor: "#f5f5f5",
