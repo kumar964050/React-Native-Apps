@@ -8,7 +8,7 @@ import {
   FlatList,
   StyleSheet,
 } from "react-native";
-
+// import CheckBox from "react-native-check-box";
 import { v4 as uuidV4 } from "uuid";
 
 export default function App() {
@@ -84,13 +84,22 @@ export default function App() {
             const each = itemData.item;
             return (
               <View style={styles.eachTask} key={each.id}>
+                <View>
+                  {/* <CheckBox /> */}
+                  <Text
+                    onPress={() => handleCompleteTask(each.id)}
+                    style={[styles.task, each.isCompleted && styles.str]}
+                  >
+                    {each.task}
+                  </Text>
+                </View>
+
                 <Text
-                  onPress={() => handleCompleteTask(each.id)}
-                  style={[styles.task, each.isCompleted && styles.str]}
+                  style={styles.deleteIcon}
+                  onPress={() => handleDelete(each.id)}
                 >
-                  {each.task}
+                  X
                 </Text>
-                <Text onPress={() => handleDelete(each.id)}>X</Text>
               </View>
             );
           }}
@@ -137,7 +146,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   eachTask: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#e6f6ff",
     padding: 15,
     borderRadius: 6,
     display: "flex",
@@ -145,11 +154,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 5,
+    borderLeftColor: "#096f92",
+    borderLeftWidth: 5,
   },
   task: {
     fontSize: 16,
   },
   str: {
     textDecorationLine: "line-through",
+  },
+  deleteIcon: {
+    fontSize: 20,
+    color: "red",
   },
 });
