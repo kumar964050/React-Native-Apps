@@ -1,5 +1,5 @@
 # React-Native-Apps
 
-# Todo List App
+# Tourism App
 
 ![Logo](./Assets/Images/Tourism.gif)
